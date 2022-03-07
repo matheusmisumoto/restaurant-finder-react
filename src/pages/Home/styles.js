@@ -1,0 +1,46 @@
+import styled from "styled-components";
+import Slider from "react-slick";
+
+export const Container = styled.aside`
+    background-color: ${(props) => props.theme.colors.background};
+    width: 320px;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+`;
+
+export const Wrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    font-family: Inter, sans-serif;
+`;
+
+export const Logo = styled.img`
+    min-width: 50%;
+    max-width: 75%;
+    height: auto;
+    margin: 0 auto 1rem;
+`;
+
+export const Search = styled.section`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #FFFFFF;
+    padding: 1.5rem;
+`;
+
+export const CarouselTitle = styled.h2`
+    font-family: ${(props) => props.theme.fonts.regular};
+    color: ${(props) => props.theme.colors.text};
+    font-size: 1.5rem;
+    font-weight: bold;
+    line-height: 1.25rem;
+    margin: 1.5rem 0;
+`;
+
+export const Carousel = styled(Slider)`
+    &:.slick-slide {
+        margin: 0 .5rem;
+    }
+`
