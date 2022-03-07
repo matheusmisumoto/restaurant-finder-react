@@ -4,9 +4,13 @@ import Slider from "react-slick";
 export const Container = styled.aside`
     background-color: ${(props) => props.theme.colors.background};
     width: 320px;
-    height: 100%;
+    height: 100vh;
     overflow-y: auto;
     overflow-x: hidden;
+    & + div {
+        flex-grow: 2;
+        position: relative;
+    }
 `;
 
 export const Wrapper = styled.div`
