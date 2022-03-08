@@ -44,7 +44,8 @@ export const CarouselTitle = styled.h2`
 `;
 
 export const Carousel = styled(Slider)`
-    &:.slick-slide {
-        margin: 0 .5rem;
+    .slick-prev:before, .slick-next: before {
+        color: black;
     }
+
 `

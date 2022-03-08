@@ -3,16 +3,24 @@ import ReactStars from "react-rating-stars-component";
 
 import { Restaurant, RestaurantInfo, RestaurantName, RestaurantAddress, RestaurantPhoto } from './styles';
 
-import restaurant from "../../assets/restaurante-fake.png";
+import { placeholder } from '../../assets/restaurante-fake.png';
 
-const RestaurantCard = () => (
+const hasPhoto = (image, alt) =>{
+    if(image){
+        return (
+            <RestaurantPhoto src={image[0].getUrl()} alt={alt} />
+        )
+    }
+}
+
+const RestaurantCard = ({ restaurant }) => (
     <Restaurant>
         <RestaurantInfo>
-            <RestaurantName>Bubba Gump Shrimp Co.</RestaurantName>
-            <ReactStars size={24} count={5} isHalf value={4} edit={false} activeColor="#e7711c" />
-            <RestaurantAddress>301 Santa Monica Pier Building 9</RestaurantAddress>
+            <RestaurantName>{restaurant.name}</RestaurantName>
+            <ReactStars size={18} count={5} isHalf value={restaurant.rating} edit={false} activeColor="#e7711c" />
+            <RestaurantAddress>{restaurant.vicinity || restaurant.formatted_address}</RestaurantAddress>
         </RestaurantInfo>
-        <RestaurantPhoto src={restaurant} alt="Foto do restaurante" />
+        {hasPhoto(restaurant.photos, restaurant.name)}
     </Restaurant>
 );
 

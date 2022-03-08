@@ -22,7 +22,7 @@ export const RestaurantInfo = styled.div`
 export const RestaurantName = styled.h3`
     font-family: ${(props) => props.theme.fonts.regular};
     color: ${(props) => props.theme.colors.text};
-    font-size: 1.5rem;
+    font-size: 1.125rem;
     margin-bottom: .5em;
     font-weight: bold;
 `;
@@ -30,14 +30,16 @@ export const RestaurantName = styled.h3`
 export const RestaurantAddress = styled.address`
     font-family: ${(props) => props.theme.fonts.regular};
     color: ${(props) => props.theme.colors.text};
-    font-size: 1rem;
+    font-size: .875rem;
+    font-weight: 500;
     line-height: 1.25em;
-    margin-top: .5rem;
+    margin-top: .875rem;
 `;
 
 export const RestaurantPhoto = styled.img`
     width: 100px;
-    height: 100px;
+    height: 120px;
     border-radius: 6px;
     object-fit: cover;
+    margin-left: .75rem;
 `;
