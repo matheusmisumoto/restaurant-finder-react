@@ -39,6 +39,7 @@ export const CarouselTitle = styled.h2`
     color: ${(props) => props.theme.colors.text};
     font-size: 1.5rem;
     font-weight: bold;
+    letter-spacing: -0.023em;
     line-height: 1.25rem;
     margin: 1.5rem 0;
 `;
@@ -47,5 +48,23 @@ export const Carousel = styled(Slider)`
     .slick-prev:before, .slick-next: before {
         color: black;
     }
-
 `
+
+export const ModalTitle = styled.h2`
+    font-family: ${(props) => props.theme.fonts.regular};
+    color: ${(props) => props.theme.colors.text};
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 1.25em;
+    letter-spacing: -0.023em;
+    margin-bottom: 1rem;
+`;
+
+export const ModalContent = styled.p`
+    font-family: ${(props) => props.theme.fonts.regular};
+    color: ${(props) => props.theme.colors.text};
+    font-size: 1.025rem;
+    line-height: 1.25em;
+    letter-spacing: -0.023em;
+    margin-bottom: 1rem;
+`;

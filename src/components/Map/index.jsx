@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { GoogleApiWrapper, Map, Marker } from 'google-maps-react';
 
-import { setRestaurants } from '../../redux/modules/restaurants';
+import { setRestaurantDetails, setRestaurants } from '../../redux/modules/restaurants';
 
 export const MapContainer = (props) => {
     const dispatch = useDispatch();
     const { restaurants } = useSelector((state) => state.restaurants)
-    const { google, query } = props;
+    const { google, query, placeId } = props;
     const [map, setMap] = useState(null);
 
     useEffect(() => {
@@ -16,8 +16,41 @@ export const MapContainer = (props) => {
         }
     }, [query])
 
+    useEffect(() => {
+        if (placeId) {
+            getRestaurantDetails(placeId)
+        }
+    }, [placeId])
+
+    function getRestaurantDetails(placeId) {
+        const service = new google.maps.places.PlacesService(map);
+
+        // Clean previous requests
+        dispatch(setRestaurantDetails(null));
+
+        const request = {
+            placeId,
+            fields: [
+                'name',
+                'opening_hours',
+                'formatted_address',
+                'formatted_phone_number',
+                'international_phone_number'
+            ]
+        }
+
+        service.getDetails(request, (place, status) => {
+            if(status === google.maps.places.PlacesServiceStatus.OK){
+                dispatch(setRestaurantDetails(place));
+            }
+        });
+    }
+
     function searchNearby(map, center) {
         const service = new google.maps.places.PlacesService(map);
+
+        // Clean previous requests
+        dispatch(setRestaurants([]));
 
         const request = {
             location: center,
@@ -34,6 +67,9 @@ export const MapContainer = (props) => {
 
     function searchByQuery(query) {
         const service = new google.maps.places.PlacesService(map);
+
+        // Clean previous requests
+        dispatch(setRestaurants([]));
 
         const request = {
             location: map.center,
@@ -60,6 +96,7 @@ export const MapContainer = (props) => {
             centerAroundCurrentLocation={true}
             onReady={onMapReady}
             onRecenter={onMapReady}
+            {...props}
         >
             {restaurants.map((restaurant) => (
                 <Marker 

@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
+import Skeleton from '../Skeleton';
+
 const Card = styled.div`
+    display: flex;
+    width: 120px;
     height: 10rem;
-    margin-right: .5rem;
     border-radius: .5rem;
     background-image: url(${(props) => props.photo});
     background-size: cover;
@@ -19,6 +22,34 @@ const Title = styled.span`
     line-height: 1.25rem;
     text-shadow: 0 0 .5em #000, 0 0 .5em #000, 0 0 .5em #000;
 `;
-const ImageCard = ({photo, title}) => <Card photo={photo}><Title>{title}</Title></Card>
+
+const SkeletonCard = styled(Skeleton)`
+        display: flex;
+        border-radius: .5rem;
+`
+
+const ImageCard = ({photo, title, onClick}) => {
+    const [ cardLoaded, setCardLoaded ] = useState(false);
+
+    useEffect(() => {
+        const imageLoader = new Image();
+        imageLoader.src = photo;
+
+        // Native event instead of React
+        imageLoader.onload = () => setCardLoaded(true);
+    }, [photo]);
+
+    return (
+        <>
+            {cardLoaded ? (
+                <Card photo={photo} onClick={onClick}>
+                    <Title>{title}</Title>
+                </Card>
+            ) : (
+                <SkeletonCard width="120px" height="10rem" />
+            )}
+        </>
+    )
+}
 
 export default ImageCard;
