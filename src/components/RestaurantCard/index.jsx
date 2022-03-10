@@ -5,8 +5,6 @@ import Skeleton from '../Skeleton';
 
 import { Restaurant, RestaurantInfo, RestaurantName, RestaurantAddress, RestaurantPhoto } from './styles';
 
-import { placeholder } from '../../assets/restaurante-fake.png';
-
 const RestaurantCard = ({ restaurant, onClick }) => {
     const [ imageLoaded, setImageLoaded ] = useState(false);
 

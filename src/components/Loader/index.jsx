@@ -1,5 +1,5 @@
 import React from 'react';
-import Lottie from 'react-lottie';
+import Lottie from 'react-lottie-player';
 
 import animationData from '../../assets/restaurants-loading.json';
 

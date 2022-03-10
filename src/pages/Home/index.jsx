@@ -10,12 +10,11 @@ import { Card, RestaurantCard, Modal, Map, Loader, Skeleton } from '../../compon
 import { Wrapper, Container, Logo, Search, CarouselTitle, Carousel, ModalTitle, ModalContent } from './styles';
 
 const Home = () => {
-    const  [inputValue , setInputValue ] = useState();
+    const  [ inputValue , setInputValue ] = useState();
     const [ query, setQuery ] = useState(null);
     const [ placeId, setPlaceId ]= useState(null);
     const [ modalOpened, setModalOpened ] = useState(false);
     const { restaurants, restaurantSelected } = useSelector((state) => state.restaurants)
-
 
     const settings = {
         dots: false,
@@ -72,9 +71,10 @@ const Home = () => {
                             <Loader />
                         )}
                 </Search>
-                {restaurants.map((restaurant) => (
+                {restaurants.map((restaurant, index) => (
                     <RestaurantCard
                         restaurant={restaurant} 
+                        key={index}
                         onClick={() => handleOpenModal(restaurant.place_id)}
                     />
                 ))}
