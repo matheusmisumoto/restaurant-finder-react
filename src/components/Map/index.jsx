@@ -46,7 +46,6 @@ export const MapContainer = (props) => {
         
                 service.textSearch(request, (results, status) => {
                     if(status === google.maps.places.PlacesServiceStatus.OK){
-                        console.log(request);
                         dispatch(setRestaurants(results));
                     }
                 });
