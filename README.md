@@ -6,7 +6,7 @@ It was developed during the React bootcamp from Digital Innovation One.
 
 See it in action: https://restaurant-finder-reactjs.herokuapp.com/
 
-# Installing
+## Installing
 
 After cloning/downloading this repository, run `npm install` to install all dependencies.
 
