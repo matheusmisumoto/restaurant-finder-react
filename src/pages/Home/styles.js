@@ -1,9 +1,18 @@
 import styled from "styled-components";
 import Slider from "react-slick";
 
+import TextField from "@material/react-text-field";
+import { ReactComponent as Logo } from '../../assets/logo.svg';
+
+export const Wrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    font-family: Inter, sans-serif;
+`;
+
 export const Container = styled.aside`
     background-color: ${(props) => props.theme.colors.background};
-    width: 320px;
+    width: 350px;
     height: 100vh;
     overflow-y: auto;
     overflow-x: hidden;
@@ -13,25 +22,30 @@ export const Container = styled.aside`
     }
 `;
 
-export const Wrapper = styled.div`
-    display: flex;
-    flex-direction: row;
-    font-family: Inter, sans-serif;
-`;
-
-export const Logo = styled.img`
+export const Tastin = styled(Logo)`
     min-width: 50%;
     max-width: 75%;
     height: auto;
-    margin: 0 auto 1rem;
+    margin: 0 auto .5rem;
+    fill: ${(props) => props.theme.colors.primary};
 `;
 
 export const Search = styled.section`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: #FFFFFF;
+    background-color: ${(props) => props.theme.colors.background};
     padding: 1.5rem;
+`;
+
+export const SearchForm = styled(TextField)`
+    margin: .5rem 0;
+    .mdc-floating-label--float-above.formLabel {
+        color: ${(props) => props.theme.colors.text};
+    }
+    &.mdc-text-field--focused .formBorder > * {
+        border-color: ${(props) => props.theme.colors.secondary} !important;
+    }
 `;
 
 export const CarouselTitle = styled.h2`
@@ -47,6 +61,10 @@ export const CarouselTitle = styled.h2`
 export const Carousel = styled(Slider)`
     .slick-prev:before, .slick-next: before {
         color: black;
+    }
+    .slick-track {
+        display: flex;
+        column-gap: .75rem;
     }
 `
 

@@ -1,11 +1,12 @@
 const theme = {
     colors: {
-        primary: '#6200ee',
-        background: '#00000014',
-        text: '#000000B3',
-        success: '#135E01'
+        primary: '#931A1A',
+        secondary: '#9b4b28',
+        background: '#DEDCCF',
+        hoverBackground: '#EBEAE2',
+        box: '#B1B0A5',
+        text: '#262524',
     },
-
     fonts: {
         regular: 'Inter, sans-serif'
     }

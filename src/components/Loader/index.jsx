@@ -4,14 +4,5 @@ import Lottie from 'react-lottie-player';
 import animationData from '../../assets/restaurants-loading.json';
 
 export default () => {
-    const defaultOptions = {
-        loop: true,
-        autoplay: true, 
-        animationData,
-        rendererSettings: {
-          preserveAspectRatio: 'xMidYMid slice'
-        }
-    };
-
-    return <Lottie options={defaultOptions} />;
+    return <Lottie loop animationData={animationData} play rendererSettings={{preserveAspectRatio: 'xMidYMid slice'}} style={{margin: '2rem 0'}} />;
 }

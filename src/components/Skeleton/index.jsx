@@ -11,7 +11,7 @@ const KeyFrameLoading = keyframes`
 `;
 
 const LoadingSkeleton = styled.div`
-    background-color: #DFDFDF;
+    background-color: ${(props) => props.theme.colors.box};
     border-radius: 6px;
     margin: ${(props) => props.margin};
     min-width: ${(props) => props.width};

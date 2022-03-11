@@ -5,8 +5,8 @@ import Skeleton from '../Skeleton';
 
 const Card = styled.div`
     display: flex;
+    width: 120px;
     height: 10rem;
-    margin-right: .75rem;
     border-radius: .5rem;
     background-image: url(${(props) => props.photo});
     background-size: cover;
@@ -46,7 +46,7 @@ const ImageCard = ({photo, title, onClick}) => {
                     <Title>{title}</Title>
                 </Card>
             ) : (
-                <SkeletonCard width="100px" height="10rem" margin="0 .75rem 0 0" />
+                <SkeletonCard width="120px" height="10rem" margin="0" />
             )}
         </>
     )

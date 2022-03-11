@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import TextField, {Input} from '@material/react-text-field';
+import { Input } from '@material/react-text-field';
 import MaterialIcon from '@material/react-material-icon';
 
-import logo from '../../assets/logo.svg';
-import restaurante from '../../assets/restaurante-fake.png';
-import { Card, RestaurantCard, Modal, Map, Loader, Skeleton } from '../../components';
+import { Card, RestaurantCard, Modal, Map, Loader, Skeleton, Disclaimer } from '../../components';
 
-import { Wrapper, Container, Logo, Search, CarouselTitle, Carousel, ModalTitle, ModalContent } from './styles';
+import { Wrapper, Container, Tastin, Search, CarouselTitle, Carousel, ModalTitle, ModalContent, SearchForm } from './styles';
 
-const Home = () => {
-    const  [ inputValue , setInputValue ] = useState();
+
+const Home = (props) => {
+    const [ inputValue , setInputValue ] = useState();
     const [ query, setQuery ] = useState(null);
     const [ placeId, setPlaceId ]= useState(null);
     const [ modalOpened, setModalOpened ] = useState(false);
@@ -19,12 +18,13 @@ const Home = () => {
     const settings = {
         dots: false,
         infinite: true,
-        autoplay: true,
+        autoplay: false,
         arrows: false,
         speed: 300,
         slidesToShow: 2,
         slidesToScroll: 2,
-        adaptativeHeight: true
+        adaptativeHeight: true,
+        variableWidth: true
     };
 
     function handleKeyPress(e) {
@@ -42,34 +42,38 @@ const Home = () => {
         <Wrapper>
             <Container>
                 <Search>
-                    <Logo src={logo} alt="Restaurant Finder"></Logo>
-                    <TextField
+                    <Tastin />
+                    <SearchForm
                         label='Search restaurants'
                         outlined
                         trailingIcon={<MaterialIcon role="button" icon="search"/>}
+                        floatingLabelClassName='formLabel'
+                        notchedOutlineClassName='formBorder'
                     >
                         <Input
                             value={inputValue}
                             onKeyPress={handleKeyPress}
-                            onChange={(e) => setInputValue(e.target.value)} />
-                        </TextField>
-                        {restaurants.length > 0 ? (
-                            <>
-                                <CarouselTitle>In your area</CarouselTitle>
-                                <Carousel {...settings}>
-                                    {
-                                    restaurants.map((restaurant) => (
-                                                <Card 
-                                                key={restaurant.place_id}
-                                                photo={restaurant.photos ? restaurant.photos[0].getUrl() : restaurante } 
-                                                title={restaurant.name}
-                                                />
-                                    ))}
-                                </Carousel>
-                            </>
-                        ) : (
-                            <Loader />
-                        )}
+                            onChange={(e) => setInputValue(e.target.value)}
+                        />
+                    </SearchForm>
+                    <Disclaimer />
+                    {restaurants.length > 0 ? (
+                        <>
+                            <CarouselTitle>In your area</CarouselTitle>
+                            <Carousel {...settings}>
+                                {
+                                restaurants.filter(restaurant => restaurant.photos).map((restaurant) => (
+                                            <Card 
+                                            key={restaurant.place_id}
+                                            photo={restaurant.photos[0].getUrl()} 
+                                            title={restaurant.name}
+                                            />
+                                ))}
+                            </Carousel>
+                        </>
+                    ) : (
+                        <Loader />
+                    )}
                 </Search>
                 {restaurants.map((restaurant, index) => (
                     <RestaurantCard

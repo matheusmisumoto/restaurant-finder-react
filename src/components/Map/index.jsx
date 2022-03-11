@@ -32,20 +32,21 @@ export const MapContainer = (props) => {
     useEffect(() => {
         if (query) {
             function searchByQuery(query) {
-                const service = google.maps.places.PlacesService(map);
+                const service = new google.maps.places.PlacesService(map);
         
                 // Clean previous requests
                 dispatch(setRestaurants([]));
         
                 const request = {
                     location: map.center,
-                    radius: '500',
+                    radius: '2000',
                     type: ['restaurant'],
                     query
                 }
         
                 service.textSearch(request, (results, status) => {
                     if(status === google.maps.places.PlacesServiceStatus.OK){
+                        console.log(request);
                         dispatch(setRestaurants(results));
                     }
                 });
@@ -94,12 +95,14 @@ export const MapContainer = (props) => {
             centerAroundCurrentLocation={true}
             onReady={onMapReady}
             onRecenter={onMapReady}
+            onDragend={onMapReady}
             {...props}
         >
             {restaurants.map((restaurant) => (
                 <Marker 
                     key={restaurant.place_id} 
-                    name={restaurant.name} 
+                    title={restaurant.name}
+                    name={restaurant.name}
                     position={
                         {
                             lat: restaurant.geometry.location.lat(),
