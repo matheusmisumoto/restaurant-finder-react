@@ -1,6 +1,7 @@
 {
   "name": "tastin-restaurant-search",
   "version": "1.0",
+  "homepage": ".",
   "engines": {
     "node": "16.x",
     "npm": "8.x"
