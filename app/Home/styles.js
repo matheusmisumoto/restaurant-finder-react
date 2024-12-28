@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Slider from "react-slick";
 
 import TextField from "@material/react-text-field";
-import { ReactComponent as Logo } from '../../assets/logo.svg';
+import Logo from '/public/logo.svg';
 
 export const Wrapper = styled.div`
     display: flex;

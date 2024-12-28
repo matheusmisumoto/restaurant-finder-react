@@ -1,14 +1,16 @@
+'use client'
+
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Input } from '@material/react-text-field';
 import MaterialIcon from '@material/react-material-icon';
 
-import { Card, RestaurantCard, Modal, Map, Loader, Skeleton, Disclaimer } from '../../components';
+import { Card, RestaurantCard, Modal, Map, Loader, Skeleton, Disclaimer } from '/components';
 
 import { Wrapper, Container, Tastin, Search, CarouselTitle, Carousel, ModalTitle, ModalContent, SearchForm } from './styles';
 
 
-const Home = (props) => {
+export default function Home(props) {
     const [ inputValue , setInputValue ] = useState();
     const [ query, setQuery ] = useState(null);
     const [ placeId, setPlaceId ]= useState(null);
@@ -52,7 +54,7 @@ const Home = (props) => {
                     >
                         <Input
                             value={inputValue}
-                            onKeyPress={handleKeyPress}
+                            onKeyUp={handleKeyPress}
                             onChange={(e) => setInputValue(e.target.value)}
                         />
                     </SearchForm>
@@ -108,5 +110,3 @@ const Home = (props) => {
         </Wrapper>
     );
 };
-
-export default Home;
