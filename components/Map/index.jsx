@@ -1,120 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { GoogleApiWrapper, Map, Marker } from 'google-maps-react';
 
-import { setRestaurantDetails, setRestaurants } from '../../redux/modules/restaurants';
+import {APIProvider, Map} from '@vis.gl/react-google-maps';
 
-export const MapContainer = (props) => {
-    const dispatch = useDispatch();
-    const { restaurants } = useSelector((state) => state.restaurants)
-    const { google, query, placeId } = props;
-    const [map, setMap] = useState(null);
 
-    function searchNearby(map, center) {
-        const service = new google.maps.places.PlacesService(map);
+export default function MapContainer(props) {
+    const [location, setLocation] = useState({ lat: 37.33490107543049, lng: -122.00916714760184 });
 
-        // Clean previous requests
-        dispatch(setRestaurants([]));
-
-        const request = {
-            location: center,
-            radius: '500',
-            type: ['restaurant']
+    const getUserGeolocation = (success, error) => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(success, error);
+        } else {
+          error(new Error("Geolocation is not supported by this browser."));
         }
+      }
 
-        service.nearbySearch(request, (results, status) => {
-            if(status === google.maps.places.PlacesServiceStatus.OK){
-                dispatch(setRestaurants(results));
-            }
-        });
-    }
-
-    useEffect(() => {
-        if (query) {
-            function searchByQuery(query) {
-                const service = new google.maps.places.PlacesService(map);
-        
-                // Clean previous requests
-                dispatch(setRestaurants([]));
-        
-                const request = {
-                    location: map.center,
-                    radius: '2000',
-                    type: ['restaurant'],
-                    query
-                }
-        
-                service.textSearch(request, (results, status) => {
-                    if(status === google.maps.places.PlacesServiceStatus.OK){
-                        dispatch(setRestaurants(results));
-                    }
-                });
-            }
-            searchByQuery(query);
-        }
-    }, [query, dispatch, google.maps.places, map])
-
-    useEffect(() => {
-        if (placeId) {
-            function getRestaurantDetails(placeId) {
-                const service = new google.maps.places.PlacesService(map);
-        
-                // Clean previous requests
-                dispatch(setRestaurantDetails(null));
-        
-                const request = {
-                    placeId,
-                    fields: [
-                        'name',
-                        'opening_hours',
-                        'formatted_address',
-                        'formatted_phone_number',
-                        'international_phone_number'
-                    ]
-                }
-        
-                service.getDetails(request, (place, status) => {
-                    if(status === google.maps.places.PlacesServiceStatus.OK){
-                        dispatch(setRestaurantDetails(place));
-                    }
-                });
-            }
-            getRestaurantDetails(placeId)
-        }
-    }, [placeId, dispatch, google.maps.places, map])
-
-    function onMapReady(_, map) {
-        setMap(map);
-        searchNearby(map, map.center)
-    }
+      useEffect(() => {
+        getUserGeolocation(
+          (position) => {
+            setLocation({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            });
+          },
+          (error) => {
+            console.error("Error getting geolocation: ", error.message);
+          }
+        );
+      }, []);
 
     return (
-        <Map 
-            google={google}
-            centerAroundCurrentLocation={true}
-            onReady={onMapReady}
-            onRecenter={onMapReady}
-            onDragend={onMapReady}
-            {...props}
-        >
-            {restaurants.map((restaurant) => (
-                <Marker 
-                    key={restaurant.place_id} 
-                    title={restaurant.name}
-                    name={restaurant.name}
-                    position={
-                        {
-                            lat: restaurant.geometry.location.lat(),
-                            lng: restaurant.geometry.location.lng()
-                        }
-                    }
-                />
-            ))}
-        </Map>
+        <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY} onLoad={() => console.log('Maps API has loaded.')}>
+            <Map
+            style={{width: '100dvw', height: '100dvh'}}
+            disableDefaultUI={true}
+            defaultZoom={18}
+            defaultCenter={location}
+            />
+        </APIProvider>
     );
 };
-
-export default GoogleApiWrapper({
-  apiKey: process.env.REACT_APP_GOOGLE_API_KEY,
-  language: 'en-US'
-})(MapContainer)
