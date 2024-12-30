@@ -4,20 +4,22 @@ export const Restaurant = styled.div`
     display: flex;
     justify-content: space-between;
     cursor: pointer;
-    margin-top: .5rem;
-    padding: 1rem 1.5rem 1rem 1rem;
+    padding: .75rem;
     background-color: ${(props) => props.theme.colors.background};
-    border-left: .5rem solid transparent;
-    :hover {
+    border: 1px solid ${(props) => props.theme.colors.box};
+    border-radius: .75rem;
+    max-width: 90%;
+
+    &:hover {
         background-color: ${(props) => props.theme.colors.hoverBackground};
-        border-color: ${(props) => props.theme.colors.primary};
     }
 `;
 
 export const RestaurantInfo = styled.div`
     display: flex;
     flex-direction: column;
-    margin-right: .75rem;
+    gap: .25rem;
+    flex: 1;
 `;
 
 export const RestaurantName = styled.h3`
@@ -25,7 +27,6 @@ export const RestaurantName = styled.h3`
     color: ${(props) => props.theme.colors.text};
     font-size: 1.125rem;
     line-height: 1.25em;
-    margin-bottom: .5em;
     font-weight: bold;
 `;
 
@@ -35,7 +36,6 @@ export const RestaurantAddress = styled.address`
     font-size: .875rem;
     font-weight: 500;
     line-height: 1.25em;
-    margin-top: .875rem;
 `;
 
 export const RestaurantPhoto = styled.img`

@@ -4,7 +4,7 @@ const theme = {
         secondary: '#9b4b28',
         background: '#DEDCCF',
         blurredBackground: 'rgba(235, 234, 226, .4)',
-        hoverBackground: '#EBEAE2',
+        hoverBackground: '#CCC9B5',
         box: '#B1B0A5',
         text: '#262524',
     },

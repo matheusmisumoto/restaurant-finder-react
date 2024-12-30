@@ -33,7 +33,7 @@ export default function MapContainer(props) {
             <Map
             style={{width: '100dvw', height: '100dvh'}}
             disableDefaultUI={true}
-            defaultZoom={18}
+            defaultZoom={16}
             defaultCenter={location}
             />
         </APIProvider>

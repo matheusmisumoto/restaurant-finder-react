@@ -29,10 +29,10 @@ const RestaurantCard = ({ restaurant, onClick }) => {
         <Restaurant onClick={onClick}>
             <RestaurantInfo>
                 <RestaurantName>{restaurant.name}</RestaurantName>
-                <ReactStars size={18} count={5} isHalf value={restaurant.rating} edit={false} activeColor="#e7711c" />
-                <RestaurantAddress>{restaurant.vicinity || restaurant.formatted_address}</RestaurantAddress>
+                { restaurant.vicinity || restaurant.formatted_address && 
+                    <RestaurantAddress>{restaurant.vicinity || restaurant.formatted_address}</RestaurantAddress>
+                }
             </RestaurantInfo>
-            {hasPhoto(restaurant.photos, restaurant.name)}
         </Restaurant>
     )
 };
