@@ -5,10 +5,12 @@ export const Restaurant = styled.div`
     justify-content: space-between;
     cursor: pointer;
     padding: .75rem;
+    gap: .75rem;
     background-color: ${(props) => props.theme.colors.background};
     border: 1px solid ${(props) => props.theme.colors.box};
     border-radius: .75rem;
     max-width: 90%;
+    letter-spacing: -0.02em;
 
     &:hover {
         background-color: ${(props) => props.theme.colors.hoverBackground};
@@ -30,7 +32,7 @@ export const RestaurantName = styled.h3`
     font-weight: bold;
 `;
 
-export const RestaurantAddress = styled.address`
+export const RestaurantLocation = styled.address`
     font-family: ${(props) => props.theme.fonts.regular};
     color: ${(props) => props.theme.colors.text};
     font-size: .875rem;
@@ -41,7 +43,7 @@ export const RestaurantAddress = styled.address`
 export const RestaurantPhoto = styled.img`
     display: ${(props) => (props.imageLoaded ? 'block': 'none')};
     width: 100px;
-    height: 140px;
+    height: 100px;
     border-radius: 6px;
     object-fit: cover;
 `;

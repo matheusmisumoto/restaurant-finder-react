@@ -85,6 +85,7 @@ export const Container = styled.div`
     flex-direction: column;
     gap: .75rem;
     overflow-y: auto;
+    flex: 1;
 
     /* WebKit browsers */
     &::-webkit-scrollbar {

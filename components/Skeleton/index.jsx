@@ -12,11 +12,11 @@ const KeyFrameLoading = keyframes`
 
 const LoadingSkeleton = styled.div`
     background-color: ${(props) => props.theme.colors.box};
+    display: block;
     border-radius: 6px;
-    margin: ${(props) => props.margin};
-    min-width: ${(props) => props.width};
+    width: ${(props) => props.width};
     height: ${(props) => props.height};
     animation: ${KeyFrameLoading} 500ms intinite alternate;
 `;
 
-export default ({width, height, margin}) => <LoadingSkeleton width={width} height={height} margin={margin} />
+export default ({width, height, margin}) => <LoadingSkeleton width={width} height={height} />
