@@ -21,7 +21,7 @@ Insert the environment variable `NEXT_PUBLIC_GOOGLE_API_KEY` with your own API k
 - @mui/icons-material
 - @mui/material
 - @svgr/webpack
-- @vis.gl/react-google-maps": "^1.4.2",
+- @vis.gl/react-google-maps
 - react-lottie-player
 - react-rating-stars-component
 - react-redux
