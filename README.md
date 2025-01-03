@@ -2,7 +2,7 @@
 
 Tastin' is a single page application that uses the power of React, Google Maps and Google Places to find restaurants nearby.
 
-It was developed during the React bootcamp from Digital Innovation One.
+Its initial version was developed during the React bootcamp from Digital Innovation One. Then updated to use Next.js and new packages to use Google Maps API.
 
 See it in action: https://projects.matheusmisumoto.dev/restaurant-finder
 
@@ -10,15 +10,18 @@ See it in action: https://projects.matheusmisumoto.dev/restaurant-finder
 
 After cloning/downloading this repository, run `npm install` to install all dependencies.
 
-**Important:** You will need an API Key from Google Cloud Platform in order to make requests to Google Maps and Google Places.
+**Important:** You will need an API Key from Google Cloud Platform to make requests to Google Maps and Google Places.
 
-Insert the environment variable `REACT_APP_GOOGLE_API_KEY` with your own API key in your server configuration or within a `/.env` file.
+Insert the environment variable `NEXT_PUBLIC_GOOGLE_API_KEY` with your own API key in your server configuration or within a `/.env` file.
 
 ## Packages
 
-- @material/react-material-icon
-- @material/react-text-field
-- google-maps-react
+- @emotion/react
+- @emotion/styled
+- @mui/icons-material
+- @mui/material
+- @svgr/webpack
+- @vis.gl/react-google-maps": "^1.4.2",
 - react-lottie-player
 - react-rating-stars-component
 - react-redux
