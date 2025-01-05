@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 import { Overlay, Dialog, Cover, ModalTitle, Open, Rating, ModalContent, ModalDetail, Close, Price } from "./styles";
 

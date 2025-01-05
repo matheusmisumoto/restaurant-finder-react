@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import Skeleton from '../Skeleton';
 
@@ -6,7 +6,6 @@ import { Restaurant, RestaurantInfo, RestaurantName, RestaurantPhoto, Restaurant
 
 const RestaurantCard = ({ restaurant, onClick }) => {
     const [ imageLoaded, setImageLoaded ] = useState(false);
-
     
     const hasPhoto = (image, alt) => {
         if(image){

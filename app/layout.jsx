@@ -1,5 +1,3 @@
-import React from "react"
-
 export const metadata = {
     title: "Tastin' - Find restaurants near you!",
     description: "Don't know where to eat? Visit us to find restaurants nearby!",
