@@ -8,7 +8,7 @@ import { Reset } from 'styled-reset';
 import store from '/redux/store.js'
 import theme from './theme.js';
 //import Home from './Home/page.jsx';
-import V2 from './v2/page.jsx';
+import V2 from './V2/page.jsx';
 
 /*
 import '@material/react-text-field/dist/text-field.css';

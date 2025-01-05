@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import Portal from './Portal';
 
-import { Overlay, Dialog } from "./styles";
+import { Overlay, Dialog, Cover, ModalTitle, Open, Rating, ModalContent, ModalDetail, Close, Price } from "./styles";
 
-const Modal = ({ children, open, onClose }) => {
+const Modal = ({ restaurant, onClose }) => {
+    
     useEffect(() => {
         function onEsc(e){
             if(e.keyCode === 27) onClose();
@@ -17,8 +17,6 @@ const Modal = ({ children, open, onClose }) => {
         }
     }, [onClose]);
 
-    if(!open) return null;
-
     function onOverlayClick() {
         onClose();
     }
@@ -28,12 +26,41 @@ const Modal = ({ children, open, onClose }) => {
     }
 
     return (
-        <Portal>
-            <Overlay onClick={onOverlayClick}>
-                <Dialog onClick={onDialogClick}>{children}</Dialog>
-            </Overlay>
-        </Portal>
+        <Overlay onClick={onOverlayClick}>
+            <Dialog onClick={onDialogClick}>
+                {restaurant.photos && restaurant.photos.length > 0 && (
+                    <Cover>
+                        <img src={restaurant.photos[0].getUrl()} alt={restaurant.name} />
+                    </Cover>
+                )}
+                <ModalContent>
+                    { restaurant.opening_hours?.isOpen() ? 
+                        <Open $isOpen='true'>Open</Open> 
+                        : 
+                        <Open $isOpen='false'>Closed</Open>
+                    }
+                    {
+                        restaurant.rating &&
+                        <Rating>{restaurant.rating} stars</Rating>
+                    }
+                    {
+                        restaurant.price_level &&
+                        <Price>{
+                            '$'.repeat(restaurant.price_level)
+                        }</Price>
+                    }                    
+                </ModalContent>
+                <ModalTitle>{restaurant?.name}</ModalTitle>
+                <ModalContent>
+                    <ModalDetail>{restaurant?.vicinity}</ModalDetail>
+                    <ModalDetail>{restaurant?.formatted_phone_number ? (<a href={'tel:'+restaurant.international_phone_number}>{restaurant.formatted_phone_number}</a>) : '' }</ModalDetail>
+                </ModalContent>
+                <Close onClick={onClose}>Close</Close>
+            </Dialog>
+        </Overlay>
     );
 };
 
 export default Modal;
+
+

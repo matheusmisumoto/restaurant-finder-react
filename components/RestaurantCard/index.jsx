@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ReactStars from "react-rating-stars-component";
 
 import Skeleton from '../Skeleton';
 
@@ -14,7 +13,7 @@ const RestaurantCard = ({ restaurant, onClick }) => {
             return (
                 <>
                     <RestaurantPhoto
-                        imageLoaded={imageLoaded}
+                        $imageloaded={imageLoaded.toString()}
                         src={image[0].getUrl()}
                         alt={alt}
                         onLoad={() => setImageLoaded(true)}

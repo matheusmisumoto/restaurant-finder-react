@@ -2,7 +2,6 @@ import styled from "styled-components";
 import Slider from "react-slick";
 
 import FormControl from '@mui/material/FormControl';
-import { OutlinedInput } from "@mui/material";
 import Logo from '/public/logo.svg';
 
 export const Wrapper = styled.div`
@@ -33,10 +32,6 @@ export const Menu = styled.aside`
         transform: translateX(-50%);
     }
 
-    & + div {
-        flex-grow: 2;
-        position: relative;
-    }
 `;
 
 export const LogoContainer = styled.div`
@@ -133,22 +128,3 @@ export const Expand = styled.button`
     padding: .25rem;
     font-weight: bold;
 `
-
-export const ModalTitle = styled.h2`
-    font-family: ${(props) => props.theme.fonts.regular};
-    color: ${(props) => props.theme.colors.text};
-    font-size: 2rem;
-    font-weight: bold;
-    line-height: 1.25em;
-    letter-spacing: -0.023em;
-    margin-bottom: 1rem;
-`;
-
-export const ModalContent = styled.p`
-    font-family: ${(props) => props.theme.fonts.regular};
-    color: ${(props) => props.theme.colors.text};
-    font-size: 1.025rem;
-    line-height: 1.25em;
-    letter-spacing: -0.023em;
-    margin-bottom: 1rem;
-`;

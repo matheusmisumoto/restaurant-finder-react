@@ -1,10 +1,11 @@
-import ReactDOM from "react-dom";
+import { createPortal } from 'react-dom';
 
-// PORTALS: https://en.reactjs.org/docs/portals.html
+const Portal = ({ children }) => {
+  const portalRoot = document.getElementById('modal-root')
+  
+  if (!portalRoot) return null;
 
-const PortalModal = ({children}) => {
-    const portal = document.getElementById('modal-root');
-    return ReactDOM.createPortal(children, portal);
+  return createPortal(children, portalRoot);
 };
 
-export default PortalModal;
+export default Portal;
