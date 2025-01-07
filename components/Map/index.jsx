@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setRestaurantDetails, setRestaurants } from '../../redux/modules/restaurants';
 
-import {APIProvider, Map, useMapsLibrary, AdvancedMarker} from '@vis.gl/react-google-maps';
+import { APIProvider, Map, useMapsLibrary } from '@vis.gl/react-google-maps';
+import { Marker } from '../Marker';
 
 const debounce = (func, wait) => {
   let timeout;
@@ -50,6 +51,8 @@ const SearchFromLocation = ({location, placeId}) => {
     // Clean previous requests
     dispatch(setRestaurantDetails(null));
 
+    console.log(placeId);
+
     places.getDetails(
       {
         placeId: placeId
@@ -68,9 +71,10 @@ const SearchFromLocation = ({location, placeId}) => {
 };
 
 export default function MapContainer(props) {
-  // Default location: Apple Park - Cupertino, CA - USA
-  const [location, setLocation] = useState({ lat: 37.33490107543049, lng: -122.00916714760184 });
-  const { restaurants } = useSelector((state) => state.restaurants)
+  const [location, setLocation] = useState();
+  const [placeId, setPlaceId] = useState(props.placeId);
+  const { restaurants } = useSelector((state) => state.restaurants);
+  const [openInfoWindowId, setOpenInfoWindowId] = useState(false);
 
   // Get user's geolocation
   const getUserGeolocation = (success, error) => {
@@ -91,6 +95,8 @@ export default function MapContainer(props) {
         });
       },
       (error) => {
+        // Default location: Apple Park - Cupertino, CA - USA
+        setLocation({ lat: 37.33490107543049, lng: -122.00916714760184 })
         console.error("Error getting geolocation: ", error.message);
       }
     );
@@ -114,15 +120,21 @@ export default function MapContainer(props) {
               defaultZoom={16}
               defaultCenter={location}
               gestureHandling={'greedy'}
+              clickableIcons={false}
               onCenterChanged={(map) => handleDragEnd(map)}
               mapId={'DEMO_MAP_ID'}
             />
-            <SearchFromLocation location={location} placeId={props.placeId} />
+            <SearchFromLocation location={location} placeId={placeId} />
           </>
         )}
         {
           restaurants.map((restaurant) => (
-            <AdvancedMarker position={{ lat: restaurant.geometry.location.lat(), lng: restaurant.geometry.location.lng() }} key={restaurant.place_id} onMouseOver={(e) => alert(restaurant.name)} />
+            <Marker 
+              position={{ lat: restaurant.geometry.location.lat(), lng: restaurant.geometry.location.lng() }} 
+              restaurant={restaurant} 
+              isOpen={openInfoWindowId === restaurant.place_id} 
+              onClick={() => setPlaceId(restaurant.place_id)}
+              key={restaurant.place_id} />
           ))
         }
       </APIProvider>
