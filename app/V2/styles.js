@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Slider from "react-slick";
 
 import FormControl from '@mui/material/FormControl';
 import Logo from '/public/logo.svg';
@@ -106,16 +105,6 @@ export const SectionTitle = styled.h2`
     letter-spacing: -0.023em;
     line-height: 1.5em;
 `;
-
-export const Carousel = styled(Slider)`
-    .slick-prev:before, .slick-next: before {
-        color: black;
-    }
-    .slick-track {
-        display: flex;
-        column-gap: .75rem;
-    }
-`
 
 export const Expand = styled.button`
     width: 100%;

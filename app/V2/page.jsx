@@ -14,9 +14,17 @@ import { Menu, Tastin, Search, Container, Close, Expand, ModalTitle, ModalConten
 import { setRestaurantDetails } from '../../redux/modules/restaurants';
 
 export default function V2(props) {
-    const [ options, setOptions ] = useState({expanded: false, placeId: null});
+    const [ options, setOptions ] = useState({expanded: false});
+    const [ inputValue , setInputValue ] = useState('');
+    const [ query, setQuery ] = useState('');
     const { restaurants, restaurantSelected } = useSelector((state) => state.restaurants);
     const dispatch = useDispatch();
+
+    function handleKeyPress(e) {
+      if(e.key === 'Enter'){
+          setQuery(inputValue);
+      }
+    }
 
     const handleToggleOptions = () => {
         setOptions((prevState) => ({
@@ -40,23 +48,21 @@ export default function V2(props) {
         dispatch(setRestaurantDetails(null));
     }
 
-    useEffect(() => {
-      console.log(restaurantSelected)
-    }, [restaurantSelected])
-
     return (
         <>
-            <Map placeId={options.placeId} />
+            <Map placeId={options.placeId} query={query} />
             <Menu style={{ height: options.expanded ? '90vh' : '220px' }}>
               <LogoContainer>
                 <Tastin />
               </LogoContainer>
-              {/*}
               <SearchForm variant="outlined">
                 <InputLabel htmlFor="search">Search Restaurants</InputLabel>
                 <OutlinedInput
                   id="search"
                   type="text"
+                  value={inputValue}
+                  onKeyUp={handleKeyPress}
+                  onChange={(e) => setInputValue(e.target.value)}
                   endAdornment={
                     <InputAdornment position="end">
                       <SearchIcon />
@@ -65,7 +71,6 @@ export default function V2(props) {
                   label="Search Restaurants"
                 />
               </SearchForm>
-              */}
               { options.expanded && (
                 <>
                   <Disclaimer />

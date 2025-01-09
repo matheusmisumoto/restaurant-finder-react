@@ -14,7 +14,7 @@ const debounce = (func, wait) => {
   };
 }
 
-const SearchFromLocation = ({location, placeId}) => {
+const SearchFromLocation = ({location, placeId, query}) => {
   const placesLib = useMapsLibrary('places');
   const dispatch = useDispatch();
   const places = useMemo(
@@ -22,6 +22,7 @@ const SearchFromLocation = ({location, placeId}) => {
     [placesLib]
   );
 
+  // Search by nearby restaurants on location change
   useEffect(() => {
     if (!places) return;
     
@@ -45,13 +46,37 @@ const SearchFromLocation = ({location, placeId}) => {
     );
   }, [places, location]);
 
+
+  useEffect(() => {
+    if (!places || !query) return;
+    
+    // Clean previous requests
+    dispatch(setRestaurants([]));
+
+    places.textSearch(
+      {
+        location: location,
+        query: query,
+        radius: 500,
+        type: 'restaurant',
+        maxResultCount: 5
+      },
+      (results, status) => {
+        if (status === 'OK') {
+          dispatch(setRestaurants(results));
+        } else {
+          console.error('Error fetching nearby restaurants by query');
+        }
+      }
+    );
+  }, [places, query]);
+
+  // Fetch restaurant details on placeId change
   useEffect(() => {
     if (!places || placeId == null) return;
     
     // Clean previous requests
     dispatch(setRestaurantDetails(null));
-
-    console.log(placeId);
 
     places.getDetails(
       {
@@ -74,7 +99,6 @@ export default function MapContainer(props) {
   const [location, setLocation] = useState();
   const [placeId, setPlaceId] = useState(props.placeId);
   const { restaurants } = useSelector((state) => state.restaurants);
-  const [openInfoWindowId, setOpenInfoWindowId] = useState(false);
 
   // Get user's geolocation
   const getUserGeolocation = (success, error) => {
@@ -84,6 +108,11 @@ export default function MapContainer(props) {
       error(new Error("Geolocation is not supported by this browser."));
     }
   }
+
+  // Sync placeId from props and state
+  useEffect(() => {
+    setPlaceId(props.placeId);
+  }, [props.placeId, placeId]);
 
   // Get user's geolocation on component mount
   useEffect(() => {
@@ -108,7 +137,15 @@ export default function MapContainer(props) {
       lat: newCenter.lat,
       lng: newCenter.lng,
     });
-  }, 1000);  
+  }, 1000);
+
+  const handleMarkerClick = (placeId, restaurant) => {
+    if(placeId === restaurant.place_id) {
+      setPlaceId(null);
+    } else {
+      setPlaceId(restaurant.place_id)
+    }
+  }
 
   return (
       <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY} onLoad={() => console.log('Maps API has loaded.')}>
@@ -124,7 +161,7 @@ export default function MapContainer(props) {
               onCenterChanged={(map) => handleDragEnd(map)}
               mapId={'DEMO_MAP_ID'}
             />
-            <SearchFromLocation location={location} placeId={placeId} />
+            <SearchFromLocation location={location} placeId={placeId} query={props.query} />
           </>
         )}
         {
@@ -132,8 +169,7 @@ export default function MapContainer(props) {
             <Marker 
               position={{ lat: restaurant.geometry.location.lat(), lng: restaurant.geometry.location.lng() }} 
               restaurant={restaurant} 
-              isOpen={openInfoWindowId === restaurant.place_id} 
-              onClick={() => setPlaceId(restaurant.place_id)}
+              onClick={() => handleMarkerClick(placeId, restaurant)}
               key={restaurant.place_id} />
           ))
         }
