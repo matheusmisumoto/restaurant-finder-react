@@ -6,15 +6,7 @@ import { Reset } from 'styled-reset';
 
 import store from '/redux/store.js'
 import theme from './theme.js';
-//import Home from './Home/page.jsx';
 import V2 from './v2/page.jsx';
-
-/*
-import '@material/react-text-field/dist/text-field.css';
-import '@material/react-material-icon/dist/material-icon.css';
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-*/
 
 export default function App() {
   return (
