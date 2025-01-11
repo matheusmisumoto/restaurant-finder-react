@@ -1,112 +1,108 @@
 'use client'
 
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Input } from '@material/react-text-field';
-import MaterialIcon from '@material/react-material-icon';
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { Card, RestaurantCard, Modal, Map, Loader, Skeleton, Disclaimer } from '/components';
+import { Map, Disclaimer, Loader, RestaurantCard, Modal, Portal } from '/components';
 
-import { Wrapper, Container, Tastin, Search, CarouselTitle, Carousel, ModalTitle, ModalContent, SearchForm } from './styles';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import SearchIcon from '@mui/icons-material/Search';
+import { OutlinedInput } from '@mui/material';
 
+import { Menu, Tastin, Search, Container, Close, Expand, ModalTitle, ModalContent, SearchForm, LogoContainer } from './styles';
+import { setRestaurantDetails } from '../../redux/modules/restaurants';
 
 export default function Home(props) {
-    const [ inputValue , setInputValue ] = useState();
-    const [ query, setQuery ] = useState(null);
-    const [ placeId, setPlaceId ]= useState(null);
-    const [ modalOpened, setModalOpened ] = useState(false);
-    const { restaurants, restaurantSelected } = useSelector((state) => state.restaurants)
-
-    const settings = {
-        dots: false,
-        infinite: true,
-        autoplay: false,
-        arrows: false,
-        speed: 300,
-        slidesToShow: 2,
-        slidesToScroll: 2,
-        adaptativeHeight: true,
-        variableWidth: true
-    };
+    const [ options, setOptions ] = useState({expanded: false});
+    const [ inputValue , setInputValue ] = useState('');
+    const [ query, setQuery ] = useState('');
+    const { restaurants, restaurantSelected } = useSelector((state) => state.restaurants);
+    const dispatch = useDispatch();
 
     function handleKeyPress(e) {
-        if(e.key === 'Enter'){
-            setQuery(inputValue);
-        }
+      if(e.key === 'Enter'){
+          setQuery(inputValue);
+      }
     }
 
-    function handleOpenModal(placeId) {
-        setPlaceId(placeId);
-        setModalOpened(true);
+    const handleToggleOptions = () => {
+        setOptions((prevState) => ({
+            ...prevState,
+            expanded: !prevState.expanded
+        }));
+    }
+
+    const handleRestarantSelection = (placeId) => {
+        setOptions((prevState) => ({
+            ...prevState,
+            placeId
+        }));
+    }
+
+    const handleModalClose = () => {
+        setOptions((prevState) => ({
+            ...prevState,
+            placeId: null
+        }));
+        dispatch(setRestaurantDetails(null));
     }
 
     return (
-        <Wrapper>
-            <Container>
-                <Search>
-                    <Tastin />
-                    <SearchForm
-                        label='Search restaurants'
-                        outlined
-                        trailingIcon={<MaterialIcon role="button" icon="search"/>}
-                        floatingLabelClassName='formLabel'
-                        notchedOutlineClassName='formBorder'
-                    >
-                        <Input
-                            value={inputValue}
-                            onKeyUp={handleKeyPress}
-                            onChange={(e) => setInputValue(e.target.value)}
-                        />
-                    </SearchForm>
-                    <Disclaimer />
-                    {restaurants.length > 0 ? (
-                        <>
-                            <CarouselTitle>In your area</CarouselTitle>
-                            <Carousel {...settings}>
-                                {
-                                restaurants.filter(restaurant => restaurant.photos).map((restaurant) => (
-                                            <Card 
-                                            key={restaurant.place_id}
-                                            photo={restaurant.photos[0].getUrl()} 
-                                            title={restaurant.name}
-                                            />
-                                ))}
-                            </Carousel>
-                        </>
+        <>
+            <Map placeId={options.placeId} query={query} />
+            <Menu style={{ height: options.expanded ? '90vh' : '220px' }}>
+              <LogoContainer>
+                <Tastin />
+              </LogoContainer>
+              <SearchForm variant="outlined">
+                <InputLabel htmlFor="search">Search Restaurants</InputLabel>
+                <OutlinedInput
+                  id="search"
+                  type="text"
+                  value={inputValue}
+                  onKeyUp={handleKeyPress}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <SearchIcon />
+                    </InputAdornment>
+                  }
+                  label="Search Restaurants"
+                />
+              </SearchForm>
+              { options.expanded && (
+                <>
+                  <Disclaimer />
+                  <Container>
+                  {
+                    restaurants.length > 0 ? (
+                      restaurants.map((restaurant, index) => {
+                        if(index < 10) {
+                          return (
+                            <RestaurantCard
+                                restaurant={restaurant} 
+                                key={index}
+                                onClick={() => handleRestarantSelection(restaurant.place_id)}
+                            />
+                          )
+                        }
+                      })
                     ) : (
                         <Loader />
-                    )}
-                </Search>
-                {restaurants.map((restaurant, index) => (
-                    <RestaurantCard
-                        restaurant={restaurant} 
-                        key={index}
-                        onClick={() => handleOpenModal(restaurant.place_id)}
-                    />
-                ))}
-            </Container>
-            <Map query={query} placeId={placeId} />
-            <Modal open={modalOpened} onClose={() => setModalOpened(!modalOpened)}>
-                {restaurantSelected ? (
-                    <>
-                        <ModalTitle>{restaurantSelected?.name}</ModalTitle>
-                        <ModalContent>{restaurantSelected?.opening_hours ? 
-                            restaurantSelected?.opening_hours?.open_now ? 'Open' : 'Closed'
-                            :
-                            ''
-                        }</ModalContent>
-                        <ModalContent>{restaurantSelected?.formatted_address}</ModalContent>
-                        <ModalContent>{restaurantSelected?.formatted_phone_number ? (<a href={'tel:'+restaurantSelected.international_phone_number}>{restaurantSelected.formatted_phone_number}</a>) : '' }</ModalContent>
-                    </>
-                ) : (
-                    <>
-                        <Skeleton width="10px" height="2rem" margin="0 0 1rem 0" />
-                        <Skeleton width="10px" height="1.025rem" margin="0 0 1rem 0" />
-                        <Skeleton width="10px" height="1.025rem" margin="0 0 1rem 0" />
-                        <Skeleton width="10px" height="1.025rem" margin="0 0 1rem 0" />
-                    </>
-                )}
-            </Modal>
-        </Wrapper>
+                    )
+                  }
+                  </Container>
+                </>
+              )
+            }
+              <Expand onClick={handleToggleOptions}>{options.expanded ? 'Close' : 'Open'}</Expand>
+            </Menu>
+            {restaurantSelected && (
+              <Portal>
+                <Modal onClose={handleModalClose} restaurant={restaurantSelected} />
+              </Portal>
+            )}
+        </>
     );
 };

@@ -6,14 +6,14 @@ import { Reset } from 'styled-reset';
 
 import store from '/redux/store.js'
 import theme from './theme.js';
-import V2 from './v2/page.jsx';
+import Home from './Home/page.jsx';
 
 export default function App() {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <Reset />
-        <V2 />
+        <Home />
       </ThemeProvider>
     </Provider>
   );
