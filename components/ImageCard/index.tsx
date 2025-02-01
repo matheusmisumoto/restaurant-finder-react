@@ -3,7 +3,11 @@ import styled from "styled-components";
 
 import Skeleton from '../Skeleton';
 
-const Card = styled.div`
+interface CardProps {
+    photo: string;
+}
+
+const Card = styled.div<CardProps>`
     display: flex;
     width: 120px;
     height: 10rem;
@@ -28,7 +32,7 @@ const SkeletonCard = styled(Skeleton)`
         border-radius: .5rem;
 `
 
-const ImageCard = ({photo, title, onClick}) => {
+const ImageCard = ({photo, title, onClick}:{photo: string, title: string, onClick: () => void}) => {
     const [ cardLoaded, setCardLoaded ] = useState(false);
 
     useEffect(() => {
