@@ -4,9 +4,9 @@ const Copyright = styled.div`
     padding: .5rem 1rem;
     border-radius: .75rem;
     box-sizing: border-box;
-    background-color: ${(props) => props.theme.colors.box};
+    background-color: ${(props) => props.theme?.colors?.box};
     font-family: ${(props) => props.theme.fonts.regular};
-    color: ${(props) => props.theme.colors.text};
+    color: ${(props) => props.theme?.colors?.text};
     font-size: .75rem;
     font-weight: 500;
     & h2 {
@@ -18,7 +18,7 @@ const Copyright = styled.div`
         margin: .5rem 0;
     }
     & a {
-        color: ${(props) => props.theme.colors.primary};
+        color: ${(props) => props.theme?.colors?.primary};
     }
 `
 
