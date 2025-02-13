@@ -3,17 +3,23 @@ import { useState } from "react";
 import Skeleton from '../Skeleton';
 
 import { Restaurant, RestaurantInfo, RestaurantName, RestaurantPhoto, RestaurantLocation } from './styles';
+import { RestaurantList } from "@/redux/interface";
 
-const RestaurantCard = ({ restaurant, onClick }) => {
+interface RestaurantProps {
+    restaurant: RestaurantList;
+    onClick: () => void;
+}
+
+const RestaurantCard = ({ restaurant, onClick }: RestaurantProps) => {
     const [ imageLoaded, setImageLoaded ] = useState(false);
     
-    const hasPhoto = (image, alt) => {
+    const hasPhoto = (image: string, alt: string) => {
         if(image){
             return (
                 <>
                     <RestaurantPhoto
-                        $imageloaded={imageLoaded.toString()}
-                        src={image[0].getUrl()}
+                        $imageloaded={imageLoaded}
+                        src={image}
                         alt={alt}
                         onLoad={() => setImageLoaded(true)}
                     />
@@ -27,9 +33,9 @@ const RestaurantCard = ({ restaurant, onClick }) => {
         <Restaurant onClick={onClick}>
             <RestaurantInfo>
                 <RestaurantName>{restaurant.name}</RestaurantName>
-                <RestaurantLocation>{restaurant.vicinity || restaurant.formatted_address}</RestaurantLocation>
+                <RestaurantLocation>{restaurant.vicinity}</RestaurantLocation>
             </RestaurantInfo>
-            {hasPhoto(restaurant.photos, restaurant.name)}
+            {hasPhoto(restaurant.photo_url ?? '', restaurant.name ?? '')}
         </Restaurant>
     )
 };

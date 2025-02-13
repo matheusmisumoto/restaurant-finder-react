@@ -1,19 +1,23 @@
 import styled from 'styled-components';
 
+interface RestaurantPhotoProps {
+    $imageloaded: boolean;
+}
+
 export const Restaurant = styled.div`
     display: flex;
     justify-content: space-between;
     cursor: pointer;
     padding: .75rem;
     gap: .75rem;
-    background-color: ${(props) => props.theme.colors.background};
-    border: 1px solid ${(props) => props.theme.colors.box};
+    background-color: ${(props) => props.theme?.colors?.background};
+    border: 1px solid ${(props) => props.theme?.colors?.box};
     border-radius: .75rem;
     max-width: 90%;
     letter-spacing: -0.02em;
 
     &:hover {
-        background-color: ${(props) => props.theme.colors.hoverBackground};
+        background-color: ${(props) => props.theme?.colors?.hoverBackground};
     }
 `;
 
@@ -26,7 +30,7 @@ export const RestaurantInfo = styled.div`
 
 export const RestaurantName = styled.h3`
     font-family: ${(props) => props.theme.fonts.regular};
-    color: ${(props) => props.theme.colors.text};
+    color: ${(props) => props.theme?.colors?.text};
     font-size: 1.125rem;
     line-height: 1.25em;
     font-weight: bold;
@@ -34,14 +38,14 @@ export const RestaurantName = styled.h3`
 
 export const RestaurantLocation = styled.address`
     font-family: ${(props) => props.theme.fonts.regular};
-    color: ${(props) => props.theme.colors.text};
+    color: ${(props) => props.theme?.colors?.text};
     font-size: .875rem;
     font-weight: 500;
     line-height: 1.25em;
 `;
 
-export const RestaurantPhoto = styled.img`
-    display: ${(props) => (props.$imageloaded == 'true' ? 'block': 'none')};
+export const RestaurantPhoto = styled.img<RestaurantPhotoProps>`
+    display: ${(props) => (props.$imageloaded ? 'block' : 'none')};
     width: 100px;
     height: 100px;
     border-radius: 6px;
