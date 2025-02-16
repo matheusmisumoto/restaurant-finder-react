@@ -1,12 +1,17 @@
 import { useEffect } from "react";
-
+import { RestaurantDetails } from "@/redux/interface";
 import { Overlay, Dialog, Cover, ModalTitle, Open, Rating, ModalContent, ModalDetail, Close, Price } from "./styles";
 
-const Modal = ({ restaurant, onClose }) => {
+interface ModalProps {
+    restaurant: RestaurantDetails;
+    onClose: () => void;
+}
+
+const Modal = ({ restaurant, onClose }: ModalProps) => {
     
     useEffect(() => {
-        function onEsc(e){
-            if(e.keyCode === 27) onClose();
+        function onEsc(e: KeyboardEvent) {
+            if(e.key === 'Escape') onClose();
         }
 
         window.addEventListener('keydown', onEsc);
@@ -21,23 +26,23 @@ const Modal = ({ restaurant, onClose }) => {
         onClose();
     }
 
-    function onDialogClick(e) {
+    function onDialogClick(e: React.MouseEvent) {
         e.stopPropagation();
     }
 
     return (
         <Overlay onClick={onOverlayClick}>
             <Dialog onClick={onDialogClick}>
-                {restaurant.photos && restaurant.photos.length > 0 && (
+                {restaurant.photo_url && (
                     <Cover>
-                        <img src={restaurant.photos[0].getUrl()} alt={restaurant.name} />
+                        <img src={restaurant.photo_url} alt={restaurant.name} />
                     </Cover>
                 )}
                 <ModalContent>
-                    { restaurant.opening_hours?.isOpen() ? 
-                        <Open $isOpen='true'>Open</Open> 
+                    { restaurant.is_open ? 
+                        <Open $isOpen={true}>Open</Open> 
                         : 
-                        <Open $isOpen='false'>Closed</Open>
+                        <Open $isOpen={false}>Closed</Open>
                     }
                     {
                         restaurant.rating &&

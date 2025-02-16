@@ -45,7 +45,7 @@ export const Cover = styled.div`
 
 export const ModalTitle = styled.h2`
     font-family: ${(props) => props.theme.fonts.regular};
-    color: ${(props) => props.theme.colors.text};
+    color: ${(props) => props.theme?.colors?.text};
     font-size: 1.75rem;
     font-weight: bold;
     line-height: 1.25em;
@@ -58,15 +58,19 @@ export const ModalContent = styled.div`
 
 export const ModalDetail = styled.p`
     font-family: ${(props) => props.theme.fonts.regular};
-    color: ${(props) => props.theme.colors.text};
+    color: ${(props) => props.theme?.colors?.text};
     font-size: 1.025rem;
     line-height: 1.25em;
     letter-spacing: -0.023em;
     margin: .5em 0;
 `
-export const Open = styled.span`
+interface OpenProps {
+    $isOpen: boolean;
+}
+
+export const Open = styled.span<OpenProps>`
     font-family: ${(props) => props.theme.fonts.regular};
-    background-color: ${(props) => (props.$isOpen == 'true' ? 'green': 'darkred')};
+    background-color: ${(props) => (props.$isOpen ? 'green' : 'darkred')};
     color: #FFF;
     font-size: .75rem;
     padding: .5em 1em;
@@ -93,7 +97,7 @@ export const Price = styled.span`
 `
 export const Close = styled.button`
     width: 100%;
-    background-color: ${(props) => props.theme.colors.primary};
+    background-color: ${(props) => props.theme?.colors?.primary};
     border: none;
     color: #FFF;
     cursor: pointer;
