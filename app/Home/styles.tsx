@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Menu = styled.aside`
-    background: ${(props) => props.theme.colors.blurredBackground};
+    background: ${(props) => props.theme?.colors?.blurredBackground};
     backdrop-filter: blur(10px);
     width: 90%;
     max-width: 320px;
@@ -42,35 +42,35 @@ export const LogoContainer = styled.div`
 export const Tastin = styled(Logo)`
     height: 100%;
     aspect-ratio: 400/158;
-    fill: ${(props) => props.theme.colors.primary};
+    fill: ${(props) => props.theme?.colors?.primary};
 `;
 
 export const Search = styled.section`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: ${(props) => props.theme.colors.background};
+    background-color: ${(props) => props.theme?.colors?.background};
 `;
 
 export const SearchForm = styled(FormControl)`
   .MuiOutlinedInput-root {
     &.Mui-focused .MuiOutlinedInput-notchedOutline {
-      border-color: ${(props) => props.theme.colors.primary};
+      border-color: ${(props) => props.theme?.colors?.primary};
     }
 
     &:hover .MuiOutlinedInput-notchedOutline {
-      border-color: ${(props) => props.theme.colors.primary};
+      border-color: ${(props) => props.theme?.colors?.primary};
     }
 
     .MuiOutlinedInput-input {
       &:focus {
-        border-color: ${(props) => props.theme.colors.primary};
+        border-color: ${(props) => props.theme?.colors?.primary};
       }
     }
   }
 
   .MuiInputLabel-root.Mui-focused {
-    color: ${(props) => props.theme.colors.primary};
+    color: ${(props) => props.theme?.colors?.primary};
   }
 `;
 
@@ -91,7 +91,7 @@ export const Container = styled.div`
     }
 
     &::-webkit-scrollbar-thumb {
-        background: ${(props) => props.theme.colors.box};
+        background: ${(props) => props.theme?.colors?.box};
         border-radius: 1rem;
     }
 }
@@ -99,7 +99,7 @@ export const Container = styled.div`
 
 export const SectionTitle = styled.h2`
     font-family: ${(props) => props.theme.fonts.regular};
-    color: ${(props) => props.theme.colors.text};
+    color: ${(props) => props.theme?.colors?.text};
     font-size: 1.5rem;
     font-weight: bold;
     letter-spacing: -0.023em;
@@ -110,7 +110,7 @@ export const Expand = styled.button`
     width: 100%;
     background: none;
     border: none;
-    color: ${(props) => props.theme.colors.primary};
+    color: ${(props) => props.theme?.colors?.primary};
     cursor: pointer;
     font-size: 1rem;
     margin: 0 auto;

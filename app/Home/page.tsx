@@ -1,26 +1,32 @@
 'use client'
 
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Map, Disclaimer, Loader, RestaurantCard, Modal, Portal } from '/components';
+import { Map, Disclaimer, Loader, RestaurantCard, Modal, Portal } from '../../components';
 
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import { OutlinedInput } from '@mui/material';
 
-import { Menu, Tastin, Search, Container, Close, Expand, ModalTitle, ModalContent, SearchForm, LogoContainer } from './styles';
-import { setRestaurantDetails } from '../../redux/modules/restaurants';
+import { Menu, Tastin, Container,  Expand, SearchForm, LogoContainer } from './styles';
+import { selectRestaurantDetails, selectRestaurants, setRestaurantDetails } from '../../redux/modules/restaurants';
+import { RestaurantList } from '@/redux/interface';
 
-export default function Home(props) {
-    const [ options, setOptions ] = useState({expanded: false});
+export default function Home() {
+    const [ options, setOptions ] = useState<{ expanded: boolean; placeId: string | null }>({expanded: false, placeId: null});
     const [ inputValue , setInputValue ] = useState('');
     const [ query, setQuery ] = useState('');
-    const { restaurants, restaurantSelected } = useSelector((state) => state.restaurants);
     const dispatch = useDispatch();
+    const restaurants = useSelector(selectRestaurants);
+    const restaurantSelected = useSelector(selectRestaurantDetails);
 
-    function handleKeyPress(e) {
+    useEffect(() => {
+      console.log(restaurantSelected);
+    }, [restaurantSelected]);
+
+    function handleKeyPress(e: React.KeyboardEvent) {
       if(e.key === 'Enter'){
           setQuery(inputValue);
       }
@@ -33,7 +39,7 @@ export default function Home(props) {
         }));
     }
 
-    const handleRestarantSelection = (placeId) => {
+    const handleRestarantSelection = (placeId: string) => {
         setOptions((prevState) => ({
             ...prevState,
             placeId
@@ -45,7 +51,7 @@ export default function Home(props) {
             ...prevState,
             placeId: null
         }));
-        dispatch(setRestaurantDetails(null));
+        dispatch(setRestaurantDetails({} as any));
     }
 
     return (
@@ -77,13 +83,13 @@ export default function Home(props) {
                   <Container>
                   {
                     restaurants.length > 0 ? (
-                      restaurants.map((restaurant, index) => {
+                      restaurants.map((restaurant: RestaurantList, index: number) => {
                         if(index < 10) {
                           return (
                             <RestaurantCard
                                 restaurant={restaurant} 
                                 key={index}
-                                onClick={() => handleRestarantSelection(restaurant.place_id)}
+                                onClick={() => handleRestarantSelection(restaurant.place_id ?? '')}
                             />
                           )
                         }
@@ -98,7 +104,7 @@ export default function Home(props) {
             }
               <Expand onClick={handleToggleOptions}>{options.expanded ? 'Close' : 'Open'}</Expand>
             </Menu>
-            {restaurantSelected && (
+            {restaurantSelected.place_id && (
               <Portal>
                 <Modal onClose={handleModalClose} restaurant={restaurantSelected} />
               </Portal>
