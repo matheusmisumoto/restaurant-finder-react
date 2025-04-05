@@ -1,6 +1,8 @@
 # Tastin' - Restaurant Finder
 
-Tastin' is a single page application that uses the power of React, Google Maps and Google Places to find restaurants nearby.
+![Tastin' screenshot](screenshot.jpg)
+
+Tastin' is a single page application that uses the power of React with Redux, Google Maps and Google Places to find restaurants nearby.
 
 Its initial version was developed during the React bootcamp from Digital Innovation One. Then updated to use Next.js and new packages to use Google Maps API.
 
