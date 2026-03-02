@@ -6,13 +6,13 @@ const require = createRequire(import.meta.url);
 const nextConfig = {    
     output: 'export', // Outputs a Single-Page Application (SPA).
     distDir: './build', // Changes the build output directory to `./build`.
-    webpack(config) {
-        config.module.rules.push({
-            test: /\.svg$/,
-            use: ['@svgr/webpack'],
-        });
-
-        return config;
+    turbopack: {
+        rules: {
+            '*.svg': {
+                loaders: ['@svgr/webpack'],
+                as: '*.js',
+            },
+        },
     },
 };
 

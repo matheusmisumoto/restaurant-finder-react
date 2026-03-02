@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import FormControl from '@mui/material/FormControl';
-import Logo from '/public/logo.svg';
+import Logo from '../../public/logo.svg';
 
 export const Wrapper = styled.div`
     font-family: Inter, sans-serif;

@@ -25,7 +25,7 @@ Insert the environment variable `NEXT_PUBLIC_GOOGLE_API_KEY` with your own API k
 - @reduxjs/toolkit
 - @svgr/webpack
 - @vis.gl/react-google-maps
-- react-lottie-player
+- lottie-react
 - react-redux
 - styled-components
 - styled-reset
