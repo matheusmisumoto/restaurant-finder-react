@@ -29,6 +29,10 @@
       {
         "name": "next"
       }
+    ],
+    "types": [
+      "google.maps",
+      "node"
     ]
   },
   "include": [
