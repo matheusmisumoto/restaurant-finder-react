@@ -1,35 +1,32 @@
 {
   "name": "tastin-restaurant-search",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
-    "@mui/icons-material": "^6.4.8",
-    "@mui/material": "^6.4.8",
-    "@reduxjs/toolkit": "^2.6.1",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^9.0.0",
+    "@mui/material": "^9.0.0",
+    "@reduxjs/toolkit": "^2.11.2",
     "@svgr/webpack": "^8.1.0",
-    "@vis.gl/react-google-maps": "^1.5.2",
+    "@vis.gl/react-google-maps": "^1.8.3",
     "lottie-react": "^2.4.1",
-    "next": "^16.1.6",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "next": "^16.2.3",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
     "react-redux": "^9.2.0",
-    "styled-components": "^6.1.16",
-    "styled-reset": "^4.5.2",
-    "typescript": "^5.8.2"
-  },
-  "overrides": {
-    "js-yaml": "latest"
+    "styled-components": "^6.4.0",
+    "styled-reset": "^5.0.0",
+    "typescript": "^6.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.10",
-    "@eslint/eslintrc": "^3.3.4",
-    "@next/eslint-plugin-next": "^16.1.6",
-    "@types/node": "^22.13.10",
-    "@types/react-dom": "^19.0.4",
+    "@babel/core": "^7.29.0",
+    "@eslint/eslintrc": "^3.3.5",
+    "@next/eslint-plugin-next": "^16.2.3",
+    "@types/node": "^25.6.0",
+    "@types/react-dom": "^19.2.3",
     "eslint": "^10",
-    "eslint-config-next": "^16.1.6"
+    "eslint-config-next": "^16.2.3"
   },
   "scripts": {
     "dev": "next dev",
